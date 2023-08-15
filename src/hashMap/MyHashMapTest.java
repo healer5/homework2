@@ -2,16 +2,22 @@ package hashMap;
 
 public class MyHashMapTest {
     public static void main(String[] args) {
-        MyHashMap<String, Integer> myHashMap = new MyHashMap<>(10);
-        myHashMap.put("one", 1);
-        myHashMap.put("two", 2);
-        myHashMap.put("three", 3);
+        MyHashMap<Integer, Integer> myHashMap = new MyHashMap<>(100000);
+        for (int i = 0; i < 1000000; i++) {
+            myHashMap.put(i, i);
+        }
 
-        System.out.println("Size: " + myHashMap.size());
-        System.out.println("Get value for 'two': " + myHashMap.get("two"));
+        System.out.println("Size before removal: " + myHashMap.size());
 
-        myHashMap.remove("one");
-        System.out.println("Size after remove: " + myHashMap.size());
+        myHashMap.remove(100);
+        myHashMap.remove(1000);
+        myHashMap.remove(10000);
+
+        System.out.println("Size after removal: " + myHashMap.size());
+
+        System.out.println("Value at key 500: " + myHashMap.get(500));
+        System.out.println("Value at key 1000: " + myHashMap.get(1000));
+        System.out.println("Value at key 5000: " + myHashMap.get(5000));
 
         myHashMap.clear();
         System.out.println("Size after clear: " + myHashMap.size());

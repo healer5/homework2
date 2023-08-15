@@ -1,4 +1,5 @@
 package linkedList;
+import indexUtil.IndexUtils;
 
 public class MyLinkedList<T> {
     private Node<T> firstNode;
@@ -32,9 +33,7 @@ public class MyLinkedList<T> {
     }
 
     public void remove(int index){
-        if(index < 0 || index >= size){
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
+        IndexUtils.validateIndex(index, size);
 
         Node<T> nodeToRemove = getNodeAtIndex(index);
 
@@ -69,4 +68,6 @@ public class MyLinkedList<T> {
         }
         return currentNode;
     }
+
+
 }

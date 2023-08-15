@@ -1,4 +1,5 @@
 package hashMap;
+import indexUtil.IndexUtils;
 
 public class MyHashMap<K, V> {
     private Node<K, V>[] buckets;
@@ -38,21 +39,13 @@ public class MyHashMap<K, V> {
 
     public void remove(K key) {
         int index = hash(key);
-
-        if (buckets[index] == null) {
-            return;
-        }
-
         Node<K, V> current = buckets[index];
-        if (current.getKey().equals(key)) {
-            buckets[index] = current.getNextNode();
-            size--;
-            return;
-        }
+        while (current != null) {
+            if (current.getKey().equals(key)) {
 
-        while (current.getNextNode() != null) {
-            if (current.getNextNode().getKey().equals(key)) {
-                current.setNextNode(current.getNextNode().getNextNode());
+                IndexUtils.validateIndex(index, buckets.length);
+
+                buckets[index] = current.getNextNode();
                 size--;
                 return;
             }
@@ -61,9 +54,7 @@ public class MyHashMap<K, V> {
     }
 
     public void clear() {
-        for (int i = 0; i < capacity; i++) {
-            buckets[i] = null;
-        }
+        buckets = new Node[capacity];
         size = 0;
     }
 

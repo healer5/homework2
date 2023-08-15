@@ -1,9 +1,8 @@
 package arrayList;
 
-//import java.util.Arrays;
-//import java.util.StringJoiner;
+import indexUtil.IndexUtils;
 
-public class MyArrayList {
+public class MyArrayList<T>  {
     private static final int INIT_SIZE = 8;
     private Object[] data;
     private int index;
@@ -13,7 +12,7 @@ public class MyArrayList {
         index = 0;
     }
 
-    public void add(int value){
+    public void add(T value){
         resizeIfNeed();
         data[index] = value;
         index++;
@@ -30,9 +29,7 @@ public class MyArrayList {
     }
 
     public void remove(int ind){
-        if(ind < 0 || ind >= index){
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
+        IndexUtils.validateIndex(ind, index);
 
         for(int i = index; i < index - 1; i++){
             data[i] = data[i+1];
@@ -42,9 +39,7 @@ public class MyArrayList {
     }
 
     public void clear(){
-        for(int i = 0; i < index; i++){
-            data[i] = null;
-        }
+        data = new Object[INIT_SIZE];
         index = 0;
     }
 
@@ -52,16 +47,8 @@ public class MyArrayList {
         return index;
     }
 
-    public Object get(int i){
-        return data[i];
+    public T get(int i){
+        return (T) data[i];
     }
 
-//    public String toString() {
-//        StringJoiner result = new StringJoiner(", ");
-//        for (int i = 0; i < index; i++){
-//            result.add(Integer.toString(data[i]));
-//        }
-//
-//        return "[" + result + "]";
-//    }
 }
