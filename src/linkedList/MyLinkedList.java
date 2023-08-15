@@ -21,12 +21,15 @@ public class MyLinkedList<T> {
     }
 
 
-    public T get(int index){
-        Node<T> currentNode = firstNode;
-        if(index == 0){
-            return currentNode.getValue();
+    public T get(int index) {
+        IndexUtils.validateIndex(index, size);
+
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Negative index: " + index);
         }
-        for(int i = 0; i < index; i++){
+
+        Node<T> currentNode = firstNode;
+        for (int i = 0; i < index; i++) {
             currentNode = currentNode.getNextNode();
         }
         return currentNode.getValue();

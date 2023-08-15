@@ -17,9 +17,3 @@ public class MyLinkedListTest {
         System.out.println("Size after clearing: " + myLinkedList.size());
     }
 }
-
-
-
-
-
-

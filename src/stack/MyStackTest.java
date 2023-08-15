@@ -12,7 +12,7 @@ public class MyStackTest {
         System.out.println("Pop: " + myStack.pop());
         System.out.println("Size after pop: " + myStack.size());
 
-        myStack.remove(0);
+        myStack.remove(1);
         System.out.println("Size after remove: " + myStack.size());
 
         myStack.clear();

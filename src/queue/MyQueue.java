@@ -1,52 +1,39 @@
 package queue;
 
+import arrayList.MyArrayList;
+
 public class MyQueue<T> {
-    private Node<T> firstNode;
-    private Node<T> lastNode;
-    private int size;
+    private MyArrayList<T> list;
+
+    public MyQueue() {
+        list = new MyArrayList<>();
+    }
 
     public void add(T value) {
-        Node<T> newNode = new Node<>(null, null, value);
-        if (lastNode == null) {
-            firstNode = newNode;
-            lastNode = newNode;
-        } else {
-            lastNode.setNextNode(newNode);
-            newNode.setPrevNode(lastNode);
-            lastNode = newNode;
-        }
-        size++;
+        list.add(value);
     }
 
     public void clear() {
-        firstNode = null;
-        lastNode = null;
-        size = 0;
+        list.clear();
     }
 
     public int size() {
-        return size;
+        return list.size();
     }
 
     public T peek() {
-        if (firstNode == null) {
+        if (list.size() == 0) {
             throw new IllegalStateException("Queue is empty");
         }
-        return firstNode.getValue();
+        return list.get(0);
     }
 
     public T poll() {
-        if (firstNode == null) {
+        if (list.size() == 0) {
             throw new IllegalStateException("Queue is empty");
         }
-        T data = firstNode.getValue();
-        firstNode = firstNode.getNextNode();
-        if (firstNode == null) {
-            lastNode = null;
-        } else {
-            firstNode.setPrevNode(null);
-        }
-        size--;
+        T data = list.get(0);
+        list.remove(0);
         return data;
     }
 }

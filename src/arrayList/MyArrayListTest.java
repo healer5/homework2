@@ -2,7 +2,7 @@ package arrayList;
 
 public class MyArrayListTest {
     public static void main(String[] args) {
-        MyArrayList list = new MyArrayList();
+        MyArrayList<Integer> list = new MyArrayList<>();
 
 //        list.add(1);
 //        list.add(5);
