@@ -2,7 +2,7 @@ package linkedList;
 
 public class MyLinkedListTest {
     public static void main(String[] args) {
-        MyLinkedList myLinkedList = new MyLinkedList();
+        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
         myLinkedList.add("Hello");
         myLinkedList.add("from");
         myLinkedList.add("Ukraine");

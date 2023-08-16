@@ -1,4 +1,5 @@
 package hashMap;
+
 import indexUtil.IndexUtils;
 
 public class MyHashMap<K, V> {
@@ -14,11 +15,19 @@ public class MyHashMap<K, V> {
     }
 
     private int hash(K key) {
+        if (key == null) {
+            return 0;
+        }
         return Math.abs(key.hashCode()) % capacity;
     }
 
     public void put(K key, V value) {
         int index = hash(key);
+
+        if (key == null) {
+            return;
+        }
+
         Node<K, V> newNode = new Node<>(key, value);
 
         if (buckets[index] == null) {
@@ -74,5 +83,4 @@ public class MyHashMap<K, V> {
         }
         return null;
     }
-
 }

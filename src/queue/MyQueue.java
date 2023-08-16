@@ -20,18 +20,19 @@ public class MyQueue<T> {
     public int size() {
         return list.size();
     }
-
-    public T peek() {
+    private void checkNotEmpty() {
         if (list.size() == 0) {
             throw new IllegalStateException("Queue is empty");
         }
-        return list.get(0);
+    }
+
+    public T peek() {
+        checkNotEmpty();
+        return list.get(list.size() - 1);
     }
 
     public T poll() {
-        if (list.size() == 0) {
-            throw new IllegalStateException("Queue is empty");
-        }
+        checkNotEmpty();
         T data = list.get(0);
         list.remove(0);
         return data;

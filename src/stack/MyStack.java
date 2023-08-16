@@ -25,17 +25,19 @@ public class MyStack<T> {
         return list.size();
     }
 
-    public T peek() {
+    private void checkNotEmpty() {
         if (list.size() == 0) {
             throw new IllegalStateException("Stack is empty");
         }
+    }
+
+    public T peek() {
+        checkNotEmpty();
         return list.get(list.size() - 1);
     }
 
     public T pop() {
-        if (list.size() == 0) {
-            throw new IllegalStateException("Stack is empty");
-        }
+        checkNotEmpty();
         T data = list.get(list.size() - 1);
         list.remove(list.size() - 1);
         return data;

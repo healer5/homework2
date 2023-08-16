@@ -2,7 +2,7 @@ package arrayList;
 
 import indexUtil.IndexUtils;
 
-public class MyArrayList<T>  {
+public class MyArrayList<T> {
     private static final int INIT_SIZE = 8;
     private Object[] data;
     private int index;
@@ -28,11 +28,11 @@ public class MyArrayList<T>  {
         }
     }
 
-    public void remove(int ind){
+    public void remove(int ind) {
         IndexUtils.validateIndex(ind, index);
 
-        for(int i = index; i < index - 1; i++){
-            data[i] = data[i+1];
+        for (int i = ind; i < index - 1; i++) {
+            data[i] = data[i + 1];
         }
 
         data[--index] = null;
