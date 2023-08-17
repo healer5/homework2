@@ -1,69 +1,89 @@
 package hashMap;
 
-import indexUtil.IndexUtils;
-
 public class MyHashMap<K, V> {
     private Node<K, V>[] buckets;
-    private int capacity;
+    private static final int CAPACITY = 16;
     private int size;
+    private int index;
 
-    @SuppressWarnings("unchecked")
-    public MyHashMap(int capacity) {
-        this.capacity = capacity;
-        this.size = 0;
-        this.buckets = new Node[capacity];
+
+    public MyHashMap() {
+        buckets = new Node[CAPACITY];
+        size = 0;
     }
 
     private int hash(K key) {
         if (key == null) {
             return 0;
         }
-        return Math.abs(key.hashCode()) % capacity;
+        return Math.abs(key.hashCode()) % CAPACITY;
     }
 
     public void put(K key, V value) {
-        int index = hash(key);
-
-        if (key == null) {
-            return;
-        }
-
         Node<K, V> newNode = new Node<>(key, value);
+        index = Math.abs(key.hashCode() % buckets.length);
 
         if (buckets[index] == null) {
             buckets[index] = newNode;
+            size++;
         } else {
-            Node<K, V> current = buckets[index];
-            while (current.getNextNode() != null) {
-                if (current.getKey().equals(key)) {
-                    current.setValue(value);
+            Node<K, V> currentNode = buckets[index];
+            while (currentNode != null) {
+                if (currentNode.getKey().equals(key)) {
+                    currentNode.setValue(value);
                     return;
                 }
-                current = current.getNextNode();
+                if (currentNode.getNextNode() == null) {
+                    currentNode.setNextNode(newNode);
+                    size++;
+                    if (size > buckets.length * 0.75) {
+                        resizeBuckets();
+                    }
+                    return;
+                }
+                currentNode = currentNode.getNextNode();
             }
-            current.setNextNode(newNode);
         }
-        size++;
     }
 
+    private void resizeBuckets() {
+        Node<K, V>[] oldBuckets = buckets;
+        int newCapacity = buckets.length * 2;
+        buckets = new Node[newCapacity];
+        size = 0;
+
+        for (Node<K, V> node : oldBuckets) {
+            while (node != null) {
+                put(node.getKey(), node.getValue());
+                node = node.getNextNode();
+            }
+        }
+    }
+
+
     public void remove(K key) {
-        int index = hash(key);
-        Node<K, V> current = buckets[index];
-        while (current != null) {
-            if (current.getKey().equals(key)) {
+        index = Math.abs(key.hashCode() % buckets.length);
 
-                IndexUtils.validateIndex(index, buckets.length);
+        Node<K, V> currentNode = buckets[index];
+        Node<K, V> prevNode = null;
 
-                buckets[index] = current.getNextNode();
+        while (currentNode != null) {
+            if (currentNode.getKey().equals(key)) {
+                if (prevNode == null) {
+                    buckets[index] = currentNode.getNextNode();
+                } else {
+                    currentNode = currentNode.getNextNode();
+                }
                 size--;
                 return;
             }
-            current = current.getNextNode();
+            prevNode = currentNode;
+            currentNode = currentNode.getNextNode();
         }
     }
 
     public void clear() {
-        buckets = new Node[capacity];
+        buckets = new Node[CAPACITY];
         size = 0;
     }
 
@@ -72,7 +92,7 @@ public class MyHashMap<K, V> {
     }
 
     public V get(K key) {
-        int index = hash(key);
+        index = Math.abs(key.hashCode() % buckets.length);
 
         Node<K, V> current = buckets[index];
         while (current != null) {
